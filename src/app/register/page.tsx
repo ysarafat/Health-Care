@@ -13,13 +13,19 @@ import Link from "next/link";
 
 const Register = () => {
   return (
-    <Container sx={{ padding: "50px" }}>
-      <Stack>
+    <Container>
+      <Stack
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <Box
           sx={{
             maxWidth: 600,
             width: "100%",
-            margin: "0 auto",
+
             boxShadow: 1,
             borderRadius: 1,
             p: 4,
