@@ -1,4 +1,7 @@
+"use client";
 import assets from "@/assets";
+import { UserLogin } from "@/services/actions/UserLogin";
+import { storeUserInfo } from "@/services/auth.services";
 import {
   Box,
   Button,
@@ -10,8 +13,32 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+export type TLoginInputs = {
+  email: string;
+  password: string;
+};
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TLoginInputs>();
+
+  const onSubmit: SubmitHandler<TLoginInputs> = async (values) => {
+    try {
+      const res = await UserLogin(values);
+      console.log(res);
+      if (res?.data?.accessToken) {
+        toast.success(res.message);
+        storeUserInfo(res?.data?.accessToken);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   return (
     <Container>
       <Stack
@@ -52,39 +79,41 @@ const Login = () => {
             </Box>
           </Stack>
           <Box>
-            <Grid container spacing={2} my={1}>
-              <Grid item md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Email"
-                  type="email"
-                  variant="outlined"
-                  size="small"
-                  fullWidth={true}
-                />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2} my={1}>
+                <Grid item md={6}>
+                  <TextField
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("email", { required: true })}
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("password", { required: true })}
+                  />
+                </Grid>
               </Grid>
-              <Grid item md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                  size="small"
-                  fullWidth={true}
-                />
-              </Grid>
-            </Grid>
-            <Typography
-              textAlign="end"
-              component="p"
-              fontWeight={300}
-              sx={{ marginTop: "4px" }}
-            >
-              Forgot Password?
-            </Typography>
-            <Button fullWidth={true} sx={{ margin: "15px 0" }}>
-              Login
-            </Button>
+              <Typography
+                textAlign="end"
+                component="p"
+                fontWeight={300}
+                sx={{ marginTop: "4px" }}
+              >
+                Forgot Password?
+              </Typography>
+              <Button fullWidth={true} sx={{ margin: "15px 0" }} type="submit">
+                Login
+              </Button>
+            </form>
             <Typography
               component="p"
               fontWeight={300}

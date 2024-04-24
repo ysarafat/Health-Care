@@ -90,7 +90,6 @@ const Register = () => {
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
                   <TextField
-                    id="outlined-basic"
                     label="Name"
                     variant="outlined"
                     size="small"
@@ -100,7 +99,6 @@ const Register = () => {
                 </Grid>
                 <Grid item md={6}>
                   <TextField
-                    id="outlined-basic"
                     label="Email"
                     type="email"
                     variant="outlined"
@@ -111,7 +109,6 @@ const Register = () => {
                 </Grid>
                 <Grid item md={6}>
                   <TextField
-                    id="outlined-basic"
                     label="Password"
                     type="password"
                     variant="outlined"
@@ -122,7 +119,6 @@ const Register = () => {
                 </Grid>
                 <Grid item md={6}>
                   <TextField
-                    id="outlined-basic"
                     label="Contact Number"
                     type="tel"
                     variant="outlined"
@@ -133,7 +129,6 @@ const Register = () => {
                 </Grid>
                 <Grid item md={6}>
                   <TextField
-                    id="outlined-basic"
                     label="Address"
                     type="text"
                     variant="outlined"
