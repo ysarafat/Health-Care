@@ -94,6 +94,7 @@ const Login = () => {
                     name="password"
                     label="Password"
                     placeholder="******"
+                    type="password"
                   />
                 </Grid>
               </Grid>

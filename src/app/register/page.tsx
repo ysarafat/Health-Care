@@ -6,13 +6,37 @@ import { UserLogin } from "@/services/actions/UserLogin";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { storeUserInfo } from "@/services/auth.services";
 import { modifyPayload } from "@/utils/modifyPayload";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
+// zod validation schema
+export const validationSchema = z.object({
+  password: z.string().min(6, "Please enter must at least 6 characters!"),
+  patient: z.object({
+    name: z.string().min(1, "Please enter your name!"),
+    email: z.string().email("Please enter a valid email!"),
+    contactNumber: z
+      .string()
+      .regex(/^\d{11}$/, "Please enter a valid phone number!"),
+    address: z.string().min(1, "Please enter your address!"),
+  }),
+});
 
+// default values
+const defaultValues = {
+  password: "",
+  patient: {
+    name: "",
+    email: "",
+    contactNumber: "",
+    address: "",
+  },
+};
 type Inputs = {
   password: string;
   patient: {
@@ -84,7 +108,11 @@ const Register = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForm onSubmit={handleRegister}>
+            <PHForm
+              onSubmit={handleRegister}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={defaultValues}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
                   <PHInput
@@ -105,6 +133,7 @@ const Register = () => {
                     name="password"
                     label="Password"
                     placeholder="*****"
+                    type="password"
                   />
                 </Grid>
                 <Grid item md={6}>
