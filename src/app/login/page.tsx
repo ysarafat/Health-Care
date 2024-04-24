@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 export type TLoginInputs = {
@@ -20,6 +21,7 @@ export type TLoginInputs = {
   password: string;
 };
 const Login = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,10 +32,11 @@ const Login = () => {
   const onSubmit: SubmitHandler<TLoginInputs> = async (values) => {
     try {
       const res = await UserLogin(values);
-      console.log(res);
+
       if (res?.data?.accessToken) {
         toast.success(res.message);
         storeUserInfo(res?.data?.accessToken);
+        router.push("/");
       }
     } catch (error: any) {
       console.log(error.message);
