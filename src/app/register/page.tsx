@@ -87,19 +87,39 @@ const Register = () => {
             <PHForm onSubmit={handleRegister}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
-                  <PHInput name="patient.name" label="Full Name" />
+                  <PHInput
+                    name="patient.name"
+                    label="Full Name"
+                    placeholder="Yeasir Arafat"
+                  />
                 </Grid>
                 <Grid item md={6}>
-                  <PHInput name="patient.email" label="Email" />
+                  <PHInput
+                    name="patient.email"
+                    label="Email"
+                    placeholder="example@gmail.com"
+                  />
                 </Grid>
                 <Grid item md={6}>
-                  <PHInput name="password" label="Password" />
+                  <PHInput
+                    name="password"
+                    label="Password"
+                    placeholder="*****"
+                  />
                 </Grid>
                 <Grid item md={6}>
-                  <PHInput name="patient.contactNumber" label="Phone Number" />
+                  <PHInput
+                    name="patient.contactNumber"
+                    label="Phone Number"
+                    placeholder="01710500000"
+                  />
                 </Grid>
                 <Grid item md={6}>
-                  <PHInput name="patient.address" label="Address" />
+                  <PHInput
+                    name="patient.address"
+                    label="Address"
+                    placeholder="Rangpur"
+                  />
                 </Grid>
               </Grid>
               <Button fullWidth={true} sx={{ margin: "15px 0" }} type="submit">

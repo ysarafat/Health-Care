@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { SxProps, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 interface IPHInputProps {
   name: string;
@@ -6,6 +6,9 @@ interface IPHInputProps {
   type?: string;
   size?: "small" | "medium";
   fullWidth?: boolean;
+  sx?: SxProps;
+  placeholder?: string;
+  required?: boolean;
 }
 const PHInput = ({
   name,
@@ -13,13 +16,16 @@ const PHInput = ({
   type = "text",
   size = "small",
   fullWidth = true,
+  sx,
+  placeholder,
+  required,
 }: IPHInputProps) => {
   const { control } = useFormContext();
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
           label={label}
@@ -27,6 +33,11 @@ const PHInput = ({
           variant="outlined"
           size={size}
           fullWidth={fullWidth}
+          sx={{ ...sx }}
+          placeholder={placeholder}
+          required={required}
+          error={!!error?.message}
+          helperText={error?.message}
         />
       )}
     />

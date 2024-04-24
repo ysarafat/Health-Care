@@ -5,15 +5,29 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-interface IPHFormsProps {
+type TPHFormConfig = {
+  resolver?: any;
+  defaultValues?: Record<string, any>;
+};
+type TPHFormsProps = {
   children: ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
-}
-const PHForm = ({ children, onSubmit }: IPHFormsProps) => {
-  const methods = useForm();
-
+} & TPHFormConfig;
+const PHForm = ({
+  children,
+  onSubmit,
+  resolver,
+  defaultValues,
+}: TPHFormsProps) => {
+  const formConfig: TPHFormConfig = {};
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
+  if (defaultValues) {
+    formConfig["defaultValues"] = defaultValues;
+  }
+  const methods = useForm(formConfig);
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
     onSubmit(data);
   };
   return (
