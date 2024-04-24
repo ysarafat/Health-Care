@@ -11,6 +11,7 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -48,6 +49,7 @@ type Inputs = {
 };
 const Register = () => {
   const router = useRouter();
+  const [error, setError] = useState<string>("");
   const handleRegister = async (values: FieldValues) => {
     const data = modifyPayload(values);
     try {
@@ -63,6 +65,8 @@ const Register = () => {
           storeUserInfo(result?.data?.accessToken);
           router.push("/");
         }
+      } else {
+        setError(res.message);
       }
     } catch (error: any) {
       console.log(error.message);
@@ -107,6 +111,21 @@ const Register = () => {
               </Typography>
             </Box>
           </Stack>
+          {error && (
+            <Box>
+              <Typography
+                sx={{
+                  backgroundColor: "red",
+                  padding: "1px",
+                  borderRadius: "5px",
+                  color: "white",
+                  marginTop: "8px",
+                }}
+              >
+                {error}
+              </Typography>
+            </Box>
+          )}
           <Box>
             <PHForm
               onSubmit={handleRegister}
