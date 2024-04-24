@@ -1,35 +1,20 @@
 "use client";
 import assets from "@/assets";
+import PHForm from "@/components/Forms/PHForm";
+import PHInput from "@/components/Forms/PHInput";
 import { UserLogin } from "@/services/actions/UserLogin";
 import { storeUserInfo } from "@/services/auth.services";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-export type TLoginInputs = {
-  email: string;
-  password: string;
-};
+
 const Login = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<TLoginInputs>();
 
-  const onSubmit: SubmitHandler<TLoginInputs> = async (values) => {
+  const handleLogin = async (values: FieldValues) => {
     try {
       const res = await UserLogin(values);
 
@@ -82,27 +67,13 @@ const Login = () => {
             </Box>
           </Stack>
           <Box>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <PHForm onSubmit={handleLogin}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
-                  <TextField
-                    label="Email"
-                    type="email"
-                    variant="outlined"
-                    size="small"
-                    fullWidth={true}
-                    {...register("email", { required: true })}
-                  />
+                  <PHInput name="email" label="Email" />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    size="small"
-                    fullWidth={true}
-                    {...register("password", { required: true })}
-                  />
+                  <PHInput name="password" label="Password" />
                 </Grid>
               </Grid>
               <Typography
@@ -116,7 +87,7 @@ const Login = () => {
               <Button fullWidth={true} sx={{ margin: "15px 0" }} type="submit">
                 Login
               </Button>
-            </form>
+            </PHForm>
             <Typography
               component="p"
               fontWeight={300}
