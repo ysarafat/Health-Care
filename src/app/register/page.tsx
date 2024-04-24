@@ -1,6 +1,8 @@
 "use client";
 import assets from "@/assets";
+import { UserLogin } from "@/services/actions/UserLogin";
 import { registerPatient } from "@/services/actions/registerPatient";
+import { storeUserInfo } from "@/services/auth.services";
 import { modifyPayload } from "@/utils/modifyPayload";
 import {
   Box,
@@ -40,7 +42,15 @@ const Register = () => {
       const res = await registerPatient(data);
       if (res?.data?.id) {
         toast.success(res.message);
-        router.push("/login");
+        const result = await UserLogin({
+          password: values?.password,
+          email: values.patient.email,
+        });
+
+        if (result?.data?.accessToken) {
+          storeUserInfo(result?.data?.accessToken);
+          router.push("/");
+        }
       }
     } catch (error: any) {
       console.log(error.message);
