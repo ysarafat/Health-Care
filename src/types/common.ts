@@ -17,3 +17,18 @@ export type TDrawerItem = {
   icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
   child?: TDrawerItem[];
 };
+
+export type TResponseSuccess = {
+  data: any;
+  meta?: TMeta;
+};
+
+export type TResponseError = {
+  statusCode: number;
+  message: string;
+  errorMessages: TResponseErrorMessage[];
+};
+export type TResponseErrorMessage = {
+  path: string | number;
+  message: string;
+};
