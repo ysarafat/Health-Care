@@ -29,7 +29,7 @@ const Login = () => {
       if (res?.data?.accessToken) {
         toast.success(res.message);
         storeUserInfo(res?.data?.accessToken);
-        router.push("/");
+        router.push("/dashboard");
       } else {
         setError(res.message);
       }
