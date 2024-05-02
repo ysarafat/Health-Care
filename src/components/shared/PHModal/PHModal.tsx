@@ -1,8 +1,6 @@
 "use client";
 import CloseIcon from "@mui/icons-material/Close";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
@@ -25,7 +23,7 @@ type TModalProps = {
   sx?: SxProps;
 };
 export default function PHModal({
-  open,
+  open = false,
   setOpen,
   title,
   children,
@@ -59,11 +57,6 @@ export default function PHModal({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>{children}</DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
   );
