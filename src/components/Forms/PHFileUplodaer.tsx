@@ -6,7 +6,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 type TFileUploaderProps = {
   name: string;
-  label: string;
+  label?: string;
   sx?: SxProps;
 };
 export default function PHFileUploader({
