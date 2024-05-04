@@ -11,7 +11,10 @@ import DoctorModal from "./components/DoctorModal";
 
 const DoctorPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { data, isLoading } = useGetAllDoctorQuery({});
+  const query: Record<string, any> = {};
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  query["searchTerm"] = searchTerm;
+  const { data, isLoading } = useGetAllDoctorQuery({ ...query });
   const [deleteDoctor] = useDeleteDoctorMutation();
   const doctors = data?.doctor as any;
   const meta = data?.meta;
@@ -29,7 +32,8 @@ const DoctorPage = () => {
     { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "contactNumber", headerName: "Contact Number", flex: 1 },
-
+    { field: "gender", headerName: "Gender", flex: 1 },
+    { field: "apointmentFee", headerName: "Anointment Fee", flex: 1 },
     {
       field: "action",
       headerName: "Action",
@@ -55,7 +59,11 @@ const DoctorPage = () => {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Button onClick={() => setIsModalOpen(true)}>Create New Doctor</Button>
         <DoctorModal open={isModalOpen} setOpen={setIsModalOpen} />
-        <TextField size="small" placeholder="Search Specialties" />
+        <TextField
+          onChange={(e) => setSearchTerm(e.target.value)}
+          size="small"
+          placeholder="Search Doctor"
+        />
       </Stack>
       {!isLoading ? (
         <Box sx={{ mt: 2 }}>
