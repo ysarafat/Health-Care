@@ -3,6 +3,7 @@ import {
   useDeleteDoctorMutation,
   useGetAllDoctorQuery,
 } from "@/redux/api/doctorApi";
+import { useDebounce } from "@/redux/hooks";
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -13,7 +14,12 @@ const DoctorPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  query["searchTerm"] = searchTerm;
+  const debounceTerm = useDebounce({ searchQuery: searchTerm, delay: 600 });
+  console.log(debounceTerm);
+  if (!!debounceTerm) {
+    query["searchTerm"] = debounceTerm;
+  }
+
   const { data, isLoading } = useGetAllDoctorQuery({ ...query });
   const [deleteDoctor] = useDeleteDoctorMutation();
   const doctors = data?.doctor as any;
