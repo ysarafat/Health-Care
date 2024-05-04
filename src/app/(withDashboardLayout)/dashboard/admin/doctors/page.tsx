@@ -15,11 +15,9 @@ const DoctorPage = () => {
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debounceTerm = useDebounce({ searchQuery: searchTerm, delay: 600 });
-  console.log(debounceTerm);
   if (!!debounceTerm) {
     query["searchTerm"] = debounceTerm;
   }
-
   const { data, isLoading } = useGetAllDoctorQuery({ ...query });
   const [deleteDoctor] = useDeleteDoctorMutation();
   const doctors = data?.doctor as any;
